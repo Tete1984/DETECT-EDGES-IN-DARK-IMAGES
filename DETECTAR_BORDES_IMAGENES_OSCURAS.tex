@@ -1,0 +1,449 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage[spanish, activeacute]{babel}
+\usepackage{amssymb}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage[pdftex]{hyperref}
+\hypersetup{colorlinks,%
+citecolor=black,%
+filecolor=black,%
+linkcolor=black,%
+urlcolor=black%
+pdftex}
+\usepackage[latin1]{inputenc}
+
+\linespread{1.0}
+\oddsidemargin 0.0cm
+\headsep -1.0cm
+\textheight=24cm
+\textwidth=16cm
+
+
+
+
+\begin{document}
+%
+\begin{center}
+	\textbf{\Huge{Comparison of different edge detection methods in dark images}}
+\end{center}
+%
+\begin{center}
+	\textbf{Gustavo Asumu Mboro Nchama$^{1}$, Jose Owono$^{1}$, Reinaldo Rodr\'iguez Ramos$^{2}$}
+\end{center}
+%
+\begin{center}
+	\textit{$^{1}$Universidad Nacional de Guinea Ecuatorial (UNGE), Calle Hassan II, Malabo, Guinea Ecuatorial.}
+\end{center}
+%
+\begin{center}
+	\textit{$^{2}$Instituto de Cibern\'etica, Matem\'atica y F\'isica, ICIMAF, Calle 15, No. 551, E/C y D, Vedado, Habana 4, C-P 10400, Cuba.}
+\end{center}
+%
+\newtheorem{thm}{Theorem}[section]
+%
+\newtheorem{proof}{Proof}[section]
+%
+\newtheorem{defi}{Definition}[section] %Declarando el ambiente de definicion.
+%
+\newtheorem{lem}{Lemma}[section] %Declarando el ambiente Lema
+%
+\newtheorem{obs}{Observation}[section] %Declarando el ambiente de observacion.
+%
+\newtheorem{note}{Note}[section] %Declarando el ambiente de Nota.
+%
+%\newtheorem{col}{Corollary}[subsection] %Declarando el ambiente de Corolario.
+%
+\begin{center}
+	\textbf{\Huge{Abstract}}
+\end{center}
+Edge detection algorithms cover a wide range of methods from integer to fractional order methods. As far as is it known, all of these edge detection techniques have only been used to extract information from clear images. To date, the use of these methods in dark images has not been found in the literature. That is, it is not known how such methods behave in dark images. The objective of this work is to verify this. After testing these methods in dark images, experimental results have shown that not all edge detectors are capable of detecting edges in dark images. It has proved that to detect edges in dark images it is better to use fractional order methods, since, as it has been seen, integer order detectors are very sensitive to noise when applied to dark images. Also, some processed images, by some integer order methods, become darker compared to the original image. 
+\\\\
+\textbf{Key words:} Fractional-order detector;  Integer-order detector; Image edge detection; Dark images. 
+% 
+\section{Introduction}
+The need to extract valuable information in the images has led to propose the different edge detection methods in the different types of images. These methods are generally classified into three large groups. The first group of methods is formed by the first order detection methods, that is, those obtained based on the first derivative. For example, in [\ref{uno}], authors used edge detection method to remove speckle sound and preserve diagnostic information without losing critical data in the image. In [\ref{3}], the Canny and Sobel algorithms were used to find the edges of the fracture and finally compare the two methods to find the best algorithm to do this. In [\ref{4}], the Sobel edge detection algorithm were used to process the image, the edge image were acquired, the radar remote sensing image were analyzed from different angles, and then the different radar remote sensing images were transformed. In [\ref{5}], authors applied Roberts edge detector on gray and color images.
+
+Although first-order detection methods are able to detect edges in images, they have the drawback that they produce thick edges, resulting in poor edge detection quality. To avoid this poor quality in edge detection, a second group of methods have been proposed, which are the second order detection methods, that is, those obtained based on the second derivative. And although it is possible to reduce the effect of thick edges, caused by first order methods, the price paid with the use of second order methods is the excessive presence of noise in the images obtained using these methods.
+\\\\
+To prevent the appearance of thick edges, caused by first-order detectors, and excessive noise, caused by second-order detectors, the use of a third group of methods has been suggested, which are the detection methods of fractional order; that is, methods obtained based on the derivatives of fractional order. As an example of this set of techniques, the following are cited: in [\ref{cinco}] the genetic algorithm were used to get the optimal threshold levels for each image to enhance the edge detection of the fractional masks. In the paper [\ref{seis}], the fractional difference equation was obtained according to Gronwald-Letnikov fractional  differential definition to construct some filter templates to extract the palm print image edge. The experiments showed that the fractional differential edge detection algorithm is better than integer order differential methods. Based on these filters, experiment results showed that the algorithm can reduce noise and detect rich edge details than traditional methods. In [\ref{siete}], authors proposed a short edge detector algorithm without smoothing operation to deal with edge detection optimization. Experimentally, it has shown that in the proposed algorithm, the smoothing pre-process is no longer necessary do to the fact that the proposed fractional-order mask is expressed in term of immunity to noise and the capability of detecting edges. Simulation results show how the quality of edge detection can be enhanced on adjusting the fractional order parameter. In [\ref{ocho}], authors generalized the classical Sobel operator to constitute a fractional-order Sobel operator for edge detection. This operator was tested in brain image segmentation. After making the comparison with the first-order Sobel operator, the experimental results showed that such kind  operators give superior performance over conventional integer-order operators because they can detect more edge details feature of the medical images, as well as they are less sensitive to noise. In [\ref{nueve}], authors made a comparison between the integer and fractional edge detection and using one of the soft computing techniques which are fuzzy logic with integer and  fraction edge detection. It shows that soft computing technique for edge detection gives better results compared to the classical approach. In [\ref{10}], authors developed a new fractional-order edge detector via Caputo-Fabrizio derivative. Using visual perception and statistical analysis, the proposed fractional mask showed significant advantages over other compared methods. In [\ref{11}], authors aimed to extend the use of the Atangana-Baleanu fractional integral in edge detection. The performance of these method where illustrated by several numerical simulations on natural images. In [\ref{12}], authors demonstrated how using an edge detector based on fractional-order can improve the criterion of thin detection, or detection selectivity in the case of parabolic luminance transitions, and the criterion of immunity to noise, which can be interpreted in term of robustness to noise in general. In the work [\ref{13}], was carried out study of edge detection method based on the fractional derivative and Canny filter to determine information contained in the edges of digital images.
+\\\\
+However, none of the three groups of previously classified methods for edge detection have ever been used on dark images before. This has motivated us to examine these detection methods in dark images to see the result that is reflected in the processed images. The result has been that, on the one hand, some methods that correspond to the first and second groups manage to detect edges in dark images and others have not been able to. Those who have been able to detect edges, their processed images have presented a lot of noise. On the other hand, the result of the techniques of the third group of methods have managed to detect the edges in a very satisfactory manner, showing a high level of effectiveness both visually and statistically. In summary, we have concluded that if one wants to detect the edges in dark images, it is advisable to use techniques from the third group; that is, fractional order detector methods. This paper is structured as follows: Section 2 describes the experimental results when comparing different edge detector methods, and Section 3 is related to the conclusions and future work.
+\newpage
+\section{Experimental results}
+In the literature one can find a number of methods already proposed for the detection of edges in images. However, most of these methods, if not all, have not been tested, until now, in the case of dark images. In order to observe how edge detection looks like in dark images, some of the most important edge detection methods have been chosen in this work to be applied in dark images. Our experimental results have been divided into three cases:
+\\\\
+In the first case, fractional order and integer order detection methods have been applied. The results obtained for this case are given in the figures \ref{id}-\ref{i2.}. Making a visual analysis in the images of said figures, it is observed that the edges obtained from the use of fractional order detectors are better highlighted than those obtained using integer order detectors. In addition, the images resulting from the application of the integer order detectors have much more noise.  Also, some processed images, by some integer order methods, become darker compared to the original image, as we can see in the last image of the first column and in the last two images of the third column of Figure \ref{i2.}. This visual superiority of fractional order detectors compared to integer order detectors is also evident at the statistical level, since, when using the PSNR as a statistical parameter, it has been observed that high values are obtained in the images obtained using fractional order detectors. All this leads us to the first conclusion: if one wants to obtain the edges of dark images, it is preferable to use fractional order methods.
+\\\\
+In the second case, to show the important of normalization of an image in the process of edge detection, we have firstly normalized original images with the help of the median filter. After, we have applied in the normalized images the same methods used in the first case. The results obtained are reflected in the images of figures \ref{i2.2}-\ref{i2.8}. Comparing the results obtained in the first case (see figures \ref{id}-\ref{i2.}) versus what obtained in the second case (see \ref{i2.2}-\ref{i2.8}), it is observed that results obtained in the second case, that is, after normalization of original images, have less noise and better edge detection as well as higher statistical values in terms of PSNR. These observations lead us to the second conclusion: if we one to obtain better detected edges in a dark image it is recommendable to previously normalize the  image.
+\\\\
+In the third case, we make a combination between the two previous cases. In the first case, we concluded that fractional order detector methods give better results in comparison with integer order methods, while in the second case we concluded that a previous normalization of an image help to improve the edge detection. Putting into the practice the combining of these two conclusions, we obtained results which are reflected in figures \ref{i2.7}-\ref{i2.10}. In this case, two columns have been taken. At the head of the first column, is the original image; while in the header of the second column is the original image normalized by the median filter. The images that follow the original image and the normalized image have been obtained by applying the same methods to those images. In these images it can be seen that, from a visual point of view, the edges detected in the normalized images are better highlighted than in the case of the edges in the original (non-normalized) images. Also, from the statistical point of view, the PSNR values in images processed from the normalized image are higher compared to the results obtained in the images processed from the original (non-normalized) image. Even though, in this last case, we have only used fractional order detector, the same results would be obtained if we utilized integer order detector.
+\\\\
+%Everything observed in these experimental results has led us to conclude that: On the one hand, it has been observed that some of the integer order detector methods have been able to detect edges in dark images, while others have not. Those that have managed to detect edges in dark images have shown sensitivity to noise. Others have made the image return darker than the original image, thus hiding the possibility of being able to observe the edges, as can be seen in some processed images in figures \ref{i2.} and \ref{i2.8}. On the other hand, fractional order detection methods have been shown to be effective in detecting edges in dark images. In addition, with this effectiveness no price has been paid, as has happened with integer order detectors (showing too much sensitivity to noise). This shows us that the best way to carry out the edge detection process in dark images is by using fractional order detectors. In addition, it has been noticed that if the results obtained when processing the original dark image using fractional order methods are compared with the results obtained after a previous normalization of the original dark image using also fractional order methods, the latter results are better both visual and statistical level, as can be seen in the images of figures \ref{i2.7}, \ref{i2.6-}, \ref{i2.44}, \ref{i2.9} and \ref {i2.10}.
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=4cm]{Figures/BECQUER2.jpg} &\includegraphics[width=4cm]{Figures/ASUMU_DETECTOR_BECQUER_0_81.png}& \includegraphics[width=4cm]{Figures/BECQUER_LOG.png}
+			\\
+			a) Original image & b) $PSNR=$28.06 & c) $PSNR=$9.08
+			\\
+			\includegraphics[width=4cm]{Figures/C_F_DETECTOR_BECQUER_0_9.png} & \includegraphics[width=4cm]{Figures/CAPUTO_DETECTOR_BECQUER_0_9.png} & \includegraphics[width=4cm]{Figures/BECQUER_PREWITT.png}
+			\\
+			d) $PSNR=$23.64 & e) $PSNR=$21.40 & f) $PSNR=$16.26
+			\\
+			\includegraphics[width=4cm]{Figures/BECQUER_SOBEL.png} & \includegraphics[width=4cm]{Figures/BECQUER_CANNY.png} & \includegraphics[width=4cm]{Figures/BECQUER_ROBERT.png}
+			\\
+			g)$PSNR=$16.62 & h) $PSNR=$7.45	& i) $PSNR=$17.43		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the original image; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{id}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/dark_girl.png} &\includegraphics[width=5cm]{Figures/DARK_GIRL_ASUMU_OPERATOR_0_89.png}& \includegraphics[width=5cm]{Figures/DARK_GIRL_LOG.png}
+			\\
+			a) Original image & b) $PSNR=$26.21 & c)  $PSNR=$10.14
+			\\
+			\includegraphics[width=5cm]{Figures/DARK_GIRL_CF_0_89.png} & \includegraphics[width=5cm]{Figures/DARK_GIRL_CAPUTO_0_9.png} & \includegraphics[width=5cm]{Figures/DARK_GIRL_PREWITT.png}
+			\\
+			d)  $PSNR=$22.75 & e)  $PSNR=$26.08 & f)  $PSNR=$19.72
+			\\
+			\includegraphics[width=5cm]{Figures/DARK_GIRL_SOBEL.png} & \includegraphics[width=5cm]{Figures/DARK_GIRL_CANNY.png} & \includegraphics[width=5cm]{Figures/DARK_GIRL_ROBERT.png}
+			\\
+			g)  $PSNR=$19.09 & h)  $PSNR=$8.3085	& i) $PSNR=$19.52		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the original image; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2...}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=4cm]{Figures/GAM1_EN_RGB.png} &\includegraphics[width=4cm]{Figures/ASUMU_DETECTOR_GAM1_EN_RGB_0_9.png}& \includegraphics[width=4cm]{Figures/LOG_GAM1_EN_RGB.png}
+			\\
+			a) Original image & b) $PSNR=25.86$ & c)$PSNR=10.45$
+			\\
+			\includegraphics[width=4cm]{Figures/CF_DETECTOR_GAM1_EN_RGB_0_9.png} & \includegraphics[width=4cm]{Figures/CAPUTO_DETECTOR_GAM1_EN_RGB_0_9.png} & \includegraphics[width=4cm]{Figures/PREWITT_GAM1_EN_RGB.png}
+			\\
+			d) $PSNR=24.76$ & e) $PSNR=23.31$ & f) $PSNR=16.29$
+			\\
+			\includegraphics[width=4cm]{Figures/SOBEL_GAM1_EN_RGB.png} & \includegraphics[width=4cm]{Figures/CANNY_GAM1_EN_RGB.png} & \includegraphics[width=4cm]{Figures/ROBERT_GAM1_EN_RGB.png}
+			\\
+			g) $PSNR=16.79$ & h) $PSNR=8.14$	& i) $PSNR=16.93$		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the original image; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2....}
+	\end{center}
+\end{figure}
+%
+%
+% dark office
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/dark_office_original.png} &\includegraphics[width=5cm]{Figures/dark_office_asumu_0_9.png}& \includegraphics[width=5cm]{Figures/dark_office_LOG.png}
+			\\
+			a) Original image & b)  $PSNR$=24.76 & c) $PSNR$=12.08
+			\\
+			\includegraphics[width=5cm]{Figures/dark_office_CF_0_9.png} & \includegraphics[width=5cm]{Figures/dark_office_Caputo_0_9.png} & \includegraphics[width=5cm]{Figures/dark_office_PREWITT.png}
+			\\
+			d)$PSNR$=21.07 & e)$PSNR$=26.99 & f)$PSNR$=15.12
+			\\
+			\includegraphics[width=5cm]{Figures/dark_office_SOBEL.png} & \includegraphics[width=5cm]{Figures/dark_office_CANNY.png} & \includegraphics[width=5cm]{Figures/dark_office_ROBERT.png}
+			\\
+			g) $PSNR$=14.83 & h)	$PSNR$=10.73 & i)	$PSNR$=15.19	
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the original image; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2..}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/dark_build_original.png} &\includegraphics[width=5cm]{Figures/dark_build_original_ASUMU_0_9.png}& \includegraphics[width=5cm]{Figures/dark_build_original_log.png}
+			\\
+			a) Original image & b)$PSNR$=22.88 & c)$PSNR$=13.29
+			\\
+			\includegraphics[width=5cm]{Figures/dark_build_original_CF_0_9.png} & \includegraphics[width=5cm]{Figures/dark_build_original_Caputo_0_9.png} & \includegraphics[width=5cm]{Figures/dark_build_original_prewitt.png}
+			\\
+			d)$PSNR$=19.67 & e)$PSNR$=26.67 & f) $PSNR$=20.70
+			\\
+			\includegraphics[width=5cm]{Figures/dark_build_original_sobel.png} & \includegraphics[width=5cm]{Figures/dark_build_original_canny.png} & \includegraphics[width=5cm]{Figures/dark_build_original_roberts.png}
+			\\
+			g)$PSNR$=20.70 & h)$PSNR$=10.97	& i)$PSNR$=21.74		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the original image; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB.png} &\includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_ASUMU_0_9.png}& \includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_LOG.png}
+			\\
+			a) Median filter method & b)$PSNR$=36.17 & c)$PSNR$=12.39
+			\\
+			\includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_CF_0_9.png} & \includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_CAPUTO_0_9.png} & \includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_PREWITT.png}
+			\\
+			d)$PSNR$=24.41 & e)$PSNR$=33.74 & f)$PSNR$=17.60
+			\\
+			\includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_SOBEL.png} & \includegraphics[width=4cm]{Figures/median_GAM1_EN_RGB_CANNY.png} & \includegraphics[width=4cm]{Figures/ROBERT_GAM1_EN_RGB.png}
+			\\
+			g)$PSNR$=17.30 & h)$PSNR$=8.44	& i)$PSNR$=16.9238		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the result of processing image through median filter; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.2}
+	\end{center}
+\end{figure}
+%
+%		
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/median_dark_girl.png} &\includegraphics[width=5cm]{Figures/median_dark_girl_ASUMU_0_9.png}& \includegraphics[width=5cm]{Figures/median_dark_girl_LOG.png}
+			\\
+			a) Median filter method & b)$PSNR$= 23.63& c)$PSNR$=12.75
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_girl_CF_0_9.png} & \includegraphics[width=5cm]{Figures/median_dark_girl_CAPUTO_0_97.png} & \includegraphics[width=5cm]{Figures/median_dark_girl_PREWITT.png}
+			\\
+			d)$PSNR$=24.48 & e)$PSNR$=29.59 & f)$PSNR$=19.73
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_girl_SOBEL} & \includegraphics[width=5cm]{Figures/median_dark_girl_CANNY.png} & \includegraphics[width=5cm]{Figures/median_dark_girl_ROBERTS.png}
+			\\
+			g) $PSNR$=20.61& h)$PSNR$=10.69	& i)$PSNR$=20.14	
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the result of processing image through median filter; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.3}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/median_dark_build.png} &\includegraphics[width=5cm]{Figures/median_dark_build_ASUMU_0_9.png}& \includegraphics[width=5cm]{Figures/median_dark_build_LOG.png}
+			\\
+			a) Median filter method & b) $PSNR=$25.41 & c) $PSNR=$11.51
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_build_CF_0_9.png} & \includegraphics[width=5cm]{Figures/median_dark_build_CAPUTO_0_9.png} & \includegraphics[width=5cm]{Figures/median_dark_build_PREWITT.png}
+			\\
+			d) $PSNR=$21.45 & e) $PSNR=$27.57 & f) $PSNR=$14.19
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_build_SOBEL.png} & \includegraphics[width=5cm]{Figures/median_dark_build_CANNY.png} & \includegraphics[width=5cm]{Figures/median_dark_build_ROBERTS.png}
+			\\
+			g) $PSNR=$14.63 & h)	$PSNR=$10.71 & i) $PSNR=$14.63		
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the result of processing image through median filter; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.4}
+	\end{center}
+\end{figure}
+%
+%
+%median dark building
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=4cm]{Figures/median_BECQUER.png} &\includegraphics[width=4cm]{Figures/median_BECQUER_ASUMU_0_9.png}& \includegraphics[width=4cm]{Figures/median_BECQUER_LOG.png}
+			\\
+			a) Median filter method & b) $PSNR=$ 24.66 & c) $PSNR=$11.75
+			\\
+			\includegraphics[width=4cm]{Figures/median_BECQUER_CF_0_9.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_CAPUTO_0_9.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_PREWITT.png}
+			\\
+			d) $PSNR=$21.54 & e) $PSNR=$23.51 & f) $PSNR=$19.26
+			\\
+			\includegraphics[width=4cm]{Figures/median_BECQUER_SOBEL.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_CANNY.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_ROBERTS.png}
+			\\
+			g) $PSNR=$19.19 & h)	$PSNR=$ 9.22 & i) $PSNR=$19.85	
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the result of processing image through median filter; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.6}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\includegraphics[width=5cm]{Figures/median_dark_office_original.png} &\includegraphics[width=5cm]{Figures/median_dark_office_original_ASUMU_0_9.png}& \includegraphics[width=5cm]{Figures/median_dark_office_original_LOG.png}
+			\\
+			a) Median filter method & b)  $PSNR=$ 22.40 & c) $PSNR=$ 14.19
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_office_original_CF_0_9.png} & \includegraphics[width=5cm]{Figures/median_dark_office_original_CAPUTO_0_97.png} & \includegraphics[width=5cm]{Figures/median_dark_office_original_PREWITT.png}
+			\\
+			d) $PSNR=$20.15 & e) $PSNR=$20.76 & f) $PSNR=$19.10
+			\\
+			\includegraphics[width=5cm]{Figures/median_dark_office_original_SOBEL.png} & \includegraphics[width=5cm]{Figures/median_dark_office_original_CANNY.png} & \includegraphics[width=5cm]{Figures/median_dark_office_original_ROBERTS.png}
+			\\
+			g) $PSNR=$ 20.02 & h) $PSNR=$12.53	& i) $PSNR=$21.03	
+		\end{tabular}
+		\caption{Dark image edge detection by using different methods:  a) is the result of processing image through median filter; b) is the obtained image by processing image of a) through [\ref{14}] method for $\alpha=0,9$; c) is the obtained image by processing the  image of a) using Log of Gaussian method; d) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo sense; f) is the obtained image by processing the  image of a) using Prewitt method; g) is the obtained image by processing the  image of a) using Sobel method; h) is the obtained image by processing the  image of a) using Canny method; i) is the obtained image by processing the  image of a) using Robert method.}
+		\label{i2.8}
+	\end{center}
+\end{figure}
+%
+%
+%LO QUE SIGUE DE AQUI A DELANTE SON:
+%COMPARACIONES ENTRE PROCESAM CON IMAGEN ORIGINAL Y NORMALIZADA
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[width=6cm]{Figures/dark_office_original.png} &\includegraphics[width=6cm]{Figures/median_dark_office_original.png}
+			\\
+			a) Original image & b) Processed original image by median filter
+			\\
+			\includegraphics[width=6cm]{Figures/dark_office_Caputo_0_9} & \includegraphics[width=6cm]{Figures/median_dark_office_original_CAPUTO_0_97.png} 
+			\\
+			c)$PSNR$=26.99& d) $PSNR$=20.76
+			\\
+			\includegraphics[width=6cm]{Figures/dark_office_CF_0_9.png} & \includegraphics[width=6cm]{Figures/median_dark_office_original_CF_0_9.png} 
+			\\
+			e) $PSNR$=21.07 & f)	$PSNR$=20.15	
+		\end{tabular}
+		\caption{Applying same methods to an original image versus it processed by median filter:  a) is the original image; b) is the result of processing original image through median filter; c) is the obtained image by processing the  image of a) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; d) is the obtained image by processing the  image of b) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; f) is the obtained image by processing the  image of b) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense.}
+		\label{i2.7}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[width=4cm]{Figures/BECQUER2.jpg} &\includegraphics[width=4cm]{Figures/median_BECQUER.png}
+			\\
+			a) Original image & b) Processed original image by median filter
+			\\
+			\includegraphics[width=4cm]{Figures/CAPUTO_DETECTOR_BECQUER_0_9.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_CAPUTO_0_9.png}
+			\\
+			c)$PSNR=$21.40 & d) $PSNR$=23.51
+			\\
+			\includegraphics[width=4cm]{Figures/C_F_DETECTOR_BECQUER_0_9.png} & \includegraphics[width=4cm]{Figures/median_BECQUER_CF_0_9.png}
+			\\
+			e)$PSNR=$23.63 & f)	$PSNR$=21.54
+		\end{tabular}
+		\caption{Applying same methods to an original image versus it processed by median filter:  a) is the original image; b) is the result of processing original image through median filter; c) is the obtained image by processing the  image of a) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; d) is the obtained image by processing the  image of b) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; f) is the obtained image by processing the  image of b) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense.}
+		\label{i2.6-}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[width=6cm]{Figures/dark_build_original.png} &\includegraphics[width=6cm]{Figures/median_dark_build.png}
+			\\
+			a) Original image & b) Processed original image by median filter 
+			\\
+			\includegraphics[width=6cm]{Figures/dark_build_original_Caputo_0_9.png} & \includegraphics[width=6cm]{Figures/median_dark_build_CAPUTO_0_9.png}
+			\\
+			c) $PSNR=$26.67 & d) $PSNR=$27.57
+			\\
+			\includegraphics[width=6cm]{Figures/dark_build_original_CF_0_9.png} & \includegraphics[width=6cm]{Figures/median_dark_build_CF_0_9.png}
+			\\
+			e) $PSNR=$19.67 & f)	$PSNR=$21.45		
+		\end{tabular}
+		\caption{Applying same methods to an original image versus it processed by median filter:  a) is the original image; b) is the result of processing original image through median filter; c) is the obtained image by processing the  image of a) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; d) is the obtained image by processing the  image of b) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; f) is the obtained image by processing the  image of b) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense.}
+		\label{i2.44}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[width=5cm]{Figures/dark_girl.png} &\includegraphics[width=5cm]{Figures/median_dark_girl.png}
+			\\
+		a) Original image & b) Processed original image by median filter 
+			\\
+			\includegraphics[width=5cm]{Figures/DARK_GIRL_CAPUTO_0_9.png} & \includegraphics[width=5cm]{Figures/median_dark_girl_CAPUTO_0_97.png}
+			\\
+			c) $PSNR$=26.08 & d) $PSNR=$29.59
+			\\
+			\includegraphics[width=5cm]{Figures/DARK_GIRL_CF_0_89.png} & \includegraphics[width=5cm]{Figures/median_dark_girl_CF_0_9.png} 
+			\\
+			e) $PSNR$=22.75 & f) $PSNR=$24.48		
+		\end{tabular}
+		\caption{Applying same methods to an original image versus it processed by median filter:  a) is the original image; b) is the result of processing original image through median filter; c) is the obtained image by processing the  image of a) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; d) is the obtained image by processing the  image of b) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; f) is the obtained image by processing the  image of b) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense.}
+		\label{i2.9}
+	\end{center}
+\end{figure}
+%
+%
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[width=5cm]{Figures/GAM1_EN_RGB.png} &\includegraphics[width=5cm]{Figures/median_GAM1_EN_RGB.png}
+			\\
+			a) Original image & b) Processed original image by median filter 
+			\\
+			\includegraphics[width=5cm]{Figures/CAPUTO_DETECTOR_GAM1_EN_RGB_0_9.png} & \includegraphics[width=5cm]{Figures/median_GAM1_EN_RGB_CAPUTO_0_9.png} 
+			\\
+			c) $PSNR=$23.31 & d) $PSNR=$33.74
+			\\
+			\includegraphics[width=5cm]{Figures/CF_DETECTOR_GAM1_EN_RGB_0_9.png} & \includegraphics[width=5cm]{Figures/median_GAM1_EN_RGB_CF_0_9.png}
+			\\
+			e) $PSNR=$24.76 & f) $PSNR=$24.41		
+		\end{tabular}
+		\caption{Applying same methods to an original image versus it processed by median filter:  a) is the original image; b) is the result of processing original image through median filter; c) is the obtained image by processing the  image of a) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; d) is the obtained image by processing the  image of b) using [\ref{14}] method for $\alpha=0,9$ in the Caputo sense; e) is the obtained image by processing the  image of a) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense; f) is the obtained image by processing the  image of b) using [\ref{15}] method for $\alpha=0,9$ in the Caputo-Fabrizio sense.}
+		\label{i2.10}
+	\end{center}
+\end{figure}
+%
+%
+\section{Conclusion}
+Before this work, to the best of our knowledge, the different methods for edge detection proposed in the literature had not been tested on images with very low contrast such as those used in this work. Therefore, the main object of this work has been to experiment with the use of well-known edge detection techniques in dark images. Experimental results indicate that these methods, in general, can also detect the edges of dark images. In the case of integer order detectors, it has been seen that in some cases it has been possible to detect edges; however, in other images, these methods have not been able to detect them. Instead, the processed image becomes darker than the initial image. In cases where edges can be detected, processed images are very sensitive to noise. Whereas, when fractional order detectors have been used in dark images, they have been seen to detect edges with high effectiveness compared to integer order techniques. All this leads us to conclude that if one wants to carry out edge detection in dark images, fractional order methods are a faithful candidate because, as it has been seen, they provide better results both visually and statistically. The interest in detecting edges in dark images arises from the need that motivates us to want to identify objects in dark places. For this reason, as future work, we are going to use this work as a springboard to identify a possible terrorist or thief who has committed a crime in a dark area in such a way that when the cameras photocopy him, his image in the photo comes out very dark without being able to identify him.
+\\\\
+\textbf{Data Availability.} To support this study, no Database has been used.
+\\\\
+\textbf{Conflict of Interest.} The authors declare that they have no conflict of interest.
+\\\\
+\textbf{Acknowledgements.} This work is supported by Universidad Nacional de
+Guinea Ecuatorial (UNGE) and Instituto de Cibern\'etica, Matem\'atica y F\'isica (ICIMAF). The authors would like to thank the anonymous reviewers for their valuable suggestions that helped improve the presentation of this paper.
+\begin{thebibliography}{00}	
+\bibitem{1} Kumar, M. R., Prasanna, J. L., Vardhan, V. S. H., Swamulu, M. B. V., Kumar, G. K., Cheerla, S., \& Santhosh, C. (2020). Image enhancement for ultrasound images using Sobel edge detection. Journal of Critical Reviews, 7(13), 390-394.\label{uno} 
+
+\bibitem{2} Shafiabadi, M., Kamkar-Rouhani, A., Riabi, S. R. G., Kahoo, A. R., \& Tokhmechi, B. (2021). Identification of reservoir fractures on FMI image logs using Canny and Sobel edge detection algorithms. Oil \& Gas Science and Technology-Revue dIFP Energies nouvelles, 76, 10.\label{3}
+
+\bibitem{3} Chen, G., Jiang, Z., \& Kamruzzaman, M. M. (2020). Radar remote sensing image retrieval algorithm based on improved Sobel operator. Journal of Visual Communication and Image Representation, 71, 102720.\label{4}
+
+\bibitem{4} Prasantha, H. S. (2020). Edge detection algorithms on digital signal processor DM642, International Journal of Creative Research Thoughts, 8(9), 1-6.\label{5}
+
+\bibitem{5} El Araby, W. S., Madian, A. H., Ashour, M. A., Farag, I., \& Nassef, M. (2018). Radiographic images fractional edge detection based on genetic algorithm. image, 7, 8.\label{cinco}
+
+\bibitem{6} Chi, C., \& Gao, F. (2014). Palm print edge extraction using fractional differential algorithm. Journal of Applied Mathematics, 2014.\label{seis}
+
+\bibitem{7} Mekideche, M., \& Ferdi, Y. (2019). Edge detection optimization using fractional order calculus. Int. Arab J. Inf. Technol., 16(5), 827-832.\label{siete}
+
+\bibitem{8} Tian, D., Li, D., \& Zhang, Y. (2015, June). Medical image segmentation based on fractional-order derivative. In 2015 Asia-Pacific Energy Equipment Engineering Research Conference (pp. 453-456). Atlantis Press.\label{ocho}
+
+\bibitem{9} ElAraby, W. S., Median, A. H., Ashour, M. A., Farag, I., \& Nassef, M. (2016, December). Fractional canny edge detection for biomedical applications. In 2016 28th International Conference on Microelectronics (ICM) (pp. 265-268). IEEE.\label{nueve}
+
+\bibitem{10} Lavín-Delgado, J. E., Solís-Pérez, J. E., Gómez-Aguilar, J. F., \& Escobar-Jiménez, R. F. (2020). A new fractional-order mask for image edge detection based on Caputo-Fabrizio fractional-order derivative without singular kernel. Circuits, Systems, and Signal Processing, 39(3), 1419-1448.\label{10}
+
+\bibitem{11} Ghanbari, B.,\& Atangana, A. (2020). Some new edge detecting techniques based on fractional derivatives with non-local and non-singular kernels. Advances in Difference Equations, 2020(1), 1-19.\label{11}
+
+\bibitem{12} Mathieu, B., Melchior, P., Oustaloup, A., \& Ceyral, C. (2003). Fractional differentiation for edge detection. Signal Processing, 83(11), 2421-2432.\label{12}
+
+\bibitem{13} Nema, N., Shukla, P., \& Soni, V (2020). Fractional calculus based via edge appreciation act in digital image processing, 02(04), 1-7.\label{13}
+
+\bibitem{14} Asumu Fractional Derivative Applied to Edge Detection on SARS-COV2 Images.\label{14}
+
+\bibitem{15} Nchama, G. A. M., Alfonso, L. D. L.,\& Cosme, A. P., (2020). Natural Images Edge Detection using Prewitt Fractional Differential Algorithm via Caputo and Caputo-Fabrizio Definitions. Global Journal of Pure and Applied Mathematics, 16(6), 789-809.\label{15}
+\end{thebibliography}
+\end{document}
